@@ -4,47 +4,38 @@ import Characters from "./components/Characters";
 
 function App() {
   const [characters, setCharacters] = useState([]);
-  const [prev, setPrev] = useState(null);
-  const [next, setNext] = useState(
-    "https://rickandmortyapi.com/api/character?page=32"
+  const [data, setData] = useState({});
+  const [atual, setAtual] = useState(
+    "https://rickandmortyapi.com/api/character"
   );
-
-  const previousPage = () => {
-    if (next !== null) {
-      fetch(`${next}`)
-        .then((response) => response.json())
-        .then((response) => setNext(response.info.prev))
-        .catch((error) => console.log("Error", error));
-    }
-  };
-
-  const nextPage = () => {
-    if (next !== null) {
-      fetch(`${next}`)
-        .then((response) => response.json())
-        .then((response) => setNext(response.info.next))
-        .catch((error) => console.log("Error", error));
-    }
-  };
+  const previousPage = () => setAtual(data.prev);
+  const nextPage = () => setAtual(data.next);
 
   useEffect(() => {
-    fetch(`${next}`)
+    fetch(`${atual}`)
       .then((response) => response.json())
-      .then((response) => setCharacters(response.results))
+      .then((response) => {
+        setData(response.info);
+        setCharacters(response.results);
+      })
       .catch((error) => console.log("Error", error));
-  }, [next]);
+  }, [atual]);
 
   return (
     <div className="App">
       <header className="App-header">
         <div className="pages">
-          {next !== null && <button onClick={previousPage}>Anterior</button>}
-          {next !== null && <button onClick={nextPage}>Próxima</button>}
+          {data.prev !== null && (
+            <button onClick={previousPage}>Anterior</button>
+          )}
+          {data.next !== null && <button onClick={nextPage}>Próxima</button>}
         </div>
         <Characters characters={characters} />
         <div className="pages">
-          <button onClick={previousPage}>Anterior</button>
-          <button onClick={nextPage}>Próxima</button>
+          {data.prev !== null && (
+            <button onClick={previousPage}>Anterior</button>
+          )}
+          {data.next !== null && <button onClick={nextPage}>Próxima</button>}
         </div>
       </header>
     </div>
