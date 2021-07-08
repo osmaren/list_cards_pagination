@@ -1,0 +1,32 @@
+.card {
+  height: 250px;
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin: 10px;
+  background-color: aliceblue;
+  color: cadetblue;
+  font-weight: bold;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+label {
+  font-size: 1rem;
+}
+.dead {
+  background-color: rgb(238, 151, 151);
+  border: 1px solid red;
+}
+
+.other {
+  background-color: grey;
+  border: 1px solid rgb(34, 32, 32);
+}
+
+.picture {
+  height: 130px;
+  width: 130px;
+  object-fit: cover;
+}

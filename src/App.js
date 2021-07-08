@@ -1,22 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState, useEffect } from "react";
+import Characters from "./components/Characters";
 
 function App() {
+  const [characters, setCharacters] = useState([]);
+  const [prev, setPrev] = useState(null);
+  const [next, setNext] = useState(
+    "https://rickandmortyapi.com/api/character?page=32"
+  );
+
+  const previousPage = () => {
+    if (next !== null) {
+      fetch(`${next}`)
+        .then((response) => response.json())
+        .then((response) => setNext(response.info.prev))
+        .catch((error) => console.log("Error", error));
+    }
+  };
+
+  const nextPage = () => {
+    if (next !== null) {
+      fetch(`${next}`)
+        .then((response) => response.json())
+        .then((response) => setNext(response.info.next))
+        .catch((error) => console.log("Error", error));
+    }
+  };
+
+  useEffect(() => {
+    fetch(`${next}`)
+      .then((response) => response.json())
+      .then((response) => setCharacters(response.results))
+      .catch((error) => console.log("Error", error));
+  }, [next]);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <div className="pages">
+          {next !== null && <button onClick={previousPage}>Anterior</button>}
+          {next !== null && <button onClick={nextPage}>Próxima</button>}
+        </div>
+        <Characters characters={characters} />
+        <div className="pages">
+          <button onClick={previousPage}>Anterior</button>
+          <button onClick={nextPage}>Próxima</button>
+        </div>
       </header>
     </div>
   );
