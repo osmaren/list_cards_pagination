@@ -25,17 +25,13 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="pages">
-          {data.prev !== null && (
-            <button onClick={previousPage}>Anterior</button>
-          )}
-          {data.next !== null && <button onClick={nextPage}>Próxima</button>}
+          {data.prev && <button onClick={previousPage}>Anterior</button>}
+          {data.next && <button onClick={nextPage}>Próxima</button>}
         </div>
         <Characters characters={characters} />
         <div className="pages">
-          {data.prev !== null && (
-            <button onClick={previousPage}>Anterior</button>
-          )}
-          {data.next !== null && <button onClick={nextPage}>Próxima</button>}
+          {data.prev && <button onClick={previousPage}>Anterior</button>}
+          {data.next && <button onClick={nextPage}>Próxima</button>}
         </div>
       </header>
     </div>
